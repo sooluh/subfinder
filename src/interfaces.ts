@@ -4,16 +4,21 @@ export interface Crtsh {
 		text: string
 	},
 	body: any
-}
+};
 
 export interface DataResult {
 	subdomain: string,
 	status: number,
-	ips: string,
+	ips: Array<string>,
 	cloudflare: boolean
-}
+};
+
+export interface Parser {
+	data: Array<DataResult>,
+	error?: any
+};
 
 export type Callback = (
-	data: null | Array<DataResult>,
-	error?: null | any
+	data: Array<DataResult>,
+	error?: any
 ) => void;

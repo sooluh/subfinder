@@ -1,6 +1,6 @@
 {
   "name": "@sooluh/subfinder",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Find, scan and collect subdomains of any domain",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,9 +16,14 @@
     "url": "git+https://github.com/sooluh/subfinder.git"
   },
   "keywords": [
-    "subdomains",
+    "subfinder",
+    "domain",
+    "subdomain",
     "finder",
-    "subdomains-finder"
+    "scanner",
+    "subdomain-finder",
+    "subdomain-scanner",
+    "pentest"
   ],
   "author": {
     "name": "Suluh Sulistiawan",

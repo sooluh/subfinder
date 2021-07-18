@@ -1,4 +1,4 @@
-import { Crtsh, DataResult, Callback as callback } from "./interfaces";
+import { Crtsh, DataResult, Callback as callback, Parser } from "./interfaces";
 
 import dns from "dns";
 import axios from "axios";
@@ -39,7 +39,7 @@ class Finder {
 			let result: Crtsh = {
 				status: {
 					code: 500,
-					text: "An error occurred in the script"
+					text: "Oops! an error has occurred"
 				},
 				body: []
 			};
@@ -54,7 +54,7 @@ class Finder {
 	 * @param domain to check
 	 * @returns status code of request
 	 */
-	private async status(domain: string): Promise<any> {
+	private async status(domain: string): Promise<number> {
 		try {
 			let response = await axios({
 				url: "http://" + domain
@@ -76,7 +76,7 @@ class Finder {
 	 * @param domain to be searched for ip address
 	 * @returns array of obtained ip addresses
 	 */
-	private async ips(domain: string): Promise<any> {
+	private async ips(domain: string): Promise<string[]> {
 		return new Promise(function (resolve, reject) {
 			dns.resolve4(domain, function (error, addresses) {
 				if (error) return resolve([]);
@@ -93,9 +93,9 @@ class Finder {
 	 * @param domain to be parsed
 	 * @returns clean array containing domain names
 	 */
-	private async parser(domain: string): Promise<any> {
+	private async parser(domain: string): Promise<Parser> {
 		const self = this;
-		let results = [];
+		let data = [];
 
 		/**
 		 * function to parse subdomains by domain name
@@ -104,7 +104,7 @@ class Finder {
 		 * @returns cleared array
 		 */
 		const parser = (body: Array<object>): Array<string> => {
-			let result: Array<string> = body.map(function (value: any) {
+			let result = body.map(function (value: any) {
 				return value.name_value.split("\n");
 			});
 
@@ -118,7 +118,7 @@ class Finder {
 		 * @returns cleared array
 		 */
 		const unique = (body: Array<string>): Array<string> => {
-			let result: Array<string> = body.filter(function (value, index, array) {
+			let result = body.filter(function (value, index, array) {
 				return array.indexOf(value) === index && !(new RegExp(/^\*/).test(value));
 			});
 
@@ -127,12 +127,21 @@ class Finder {
 
 		const { status, body } = await self.crtsh(domain);
 		if (status.code !== 200) {
-			return [null, status.text];
+			let result: Parser = {
+				data: [],
+				error: status.text
+			};
+
+			return result;
 		}
 
 		// if domain list is not available
 		if (body.length < 1) {
-			return [null, []];
+			let result: Parser = {
+				data: [],
+				error: null
+			};
+			return result;
 		}
 
 		// parse domain name
@@ -162,10 +171,14 @@ class Finder {
 				cloudflare
 			};
 
-			results.push(result);
+			data.push(result);
 		}
 
-		return results;
+		let result: Parser = {
+			data,
+			error: null
+		};
+		return result;
 	}
 
 	/**
@@ -185,20 +198,20 @@ class Finder {
 			try {
 				let results = await self.parser(domain);
 
-				callback(results);
+				callback(results.data, results.error);
 			} catch (error) {
-				callback(null, error);
+				callback([], error);
 			}
 
 			return;
 		}
 
 		// if not callback then return promise
-		return new Promise(async (resolve, reject) => {
+		return new Promise(async function (resolve, reject) {
 			try {
 				let results = await self.parser(domain);
 
-				resolve(results);
+				resolve(results.data);
 			} catch (error) {
 				reject(error);
 			}
