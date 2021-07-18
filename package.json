@@ -1,0 +1,41 @@
+{
+  "name": "@sooluh/subfinder",
+  "version": "1.0.0",
+  "description": "Find, scan and collect subdomains of any domain",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "tsc": "tsc -p tsconfig.json",
+    "prepublish": "npm run tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sooluh/subfinder.git"
+  },
+  "keywords": [
+    "subdomains",
+    "finder",
+    "subdomains-finder"
+  ],
+  "author": {
+    "name": "Suluh Sulistiawan",
+    "email": "suluh.webdevelopers@hotmail.com",
+    "url": "https://suluh.my.id"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sooluh/subfinder/issues"
+  },
+  "homepage": "https://github.com/sooluh/subfinder#readme",
+  "devDependencies": {
+    "@types/node": "^16.3.3",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cloudflare-detect": "^1.0.10"
+  }
+}
