@@ -15,25 +15,25 @@ const Subfinder = require("@sooluh/subfinder");
 const subfinder = new Subfinder();
 
 // callback
-subfinder.lookup("domain.com", (subdomains, error) {
-	if (error) return console.error(error);
+subfinder.lookup("domain.com", function (subdomains, error) {
+  if (error) return console.error(error);
 
-	console.log(subdomains);
+  console.log(subdomains);
 });
 
 // promise with then/catch
 subfinder.lookup("domain.com")
-	.then(console.log)
-	.catch(console.error);
+  .then(console.log)
+  .catch(console.error);
 
 // promise with async/await
 (async () => {
-	try {
-		const subdomains = await subfinder.lookup("domain.com");
-		console.log(subdomains);
-	} catch (error) {
-		console.error(error);
-	}
+  try {
+    const subdomains = await subfinder.lookup("domain.com");
+    console.log(subdomains);
+  } catch (error) {
+    console.error(error);
+  }
 })();
 ```
 

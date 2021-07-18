@@ -1,6 +1,6 @@
 {
   "name": "@sooluh/subfinder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Find, scan and collect subdomains of any domain",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
