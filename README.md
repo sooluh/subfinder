@@ -1,3 +1,5 @@
+<a href="https://donasi.inh.or.id/PulihkanGaza"><img alt="I stand with Palestine" src="https://github.com/Safouene1/support-palestine-banner/blob/master/banner-project.svg" width="100%" /></a>
+
 # Subdomain Finder
 
 [Subfinder](https://github.com/sooluh/subfinder) is used to find, scan and collect subdomains of any domain
